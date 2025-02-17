@@ -1,0 +1,25 @@
+-- Insertar usuarios
+INSERT INTO usuarios (nombre, email, contraseña, rol) VALUES
+('Juan Pérez', 'juan.perez@email.com', 'hashed_password_1', 'Administrador'),
+('María Gómez', 'maria.gomez@email.com', 'hashed_password_2', 'Escritor'),
+('Carlos López', 'carlos.lopez@email.com', 'hashed_password_3', 'Lector');
+
+-- Insertar proyectos
+INSERT INTO proyectos (nombre, fecha_creacion, fecha_inicio, fecha_fin, codigo_proyecto, palabras_clave, tipo_proyecto, activo, calificacion, auditora, codigo, en_cooperacion, bajada_calificacion, fases) VALUES
+('Proyecto Alpha', '2024-02-01', '2024-02-10', '2024-06-30', 'PA-001', 'seguridad, redes', 'Investigación', TRUE, 85, 'AuditCorp', 'A001', FALSE, 0, 'Inicio, Desarrollo, Cierre'),
+('Proyecto Beta', '2024-01-15', '2024-02-01', NULL, 'PB-002', 'software, AI', 'Desarrollo', TRUE, 90, 'QualityCheck', 'B002', TRUE, 5, 'Inicio, Pruebas, Implementación');
+
+-- Insertar documentos
+INSERT INTO documentos (proyecto_id, nombre_documento, fecha_creacion, documento) VALUES
+(1, 'Informe Inicial.pdf', '2024-02-05', NULL),
+(2, 'Especificaciones Técnicas.docx', '2024-02-10', NULL);
+
+-- Insertar auditoría
+INSERT INTO auditoria (usuario_id, accion) VALUES
+(1, 'Creación del proyecto Proyecto Alpha'),
+(2, 'Modificación del documento Especificaciones Técnicas.docx');
+
+-- Insertar estadísticas de acceso
+INSERT INTO estadisticas_acceso (documento_id, usuario_id) VALUES
+(1, 3),
+(2, 2);
