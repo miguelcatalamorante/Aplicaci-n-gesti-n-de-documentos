@@ -1,0 +1,60 @@
+-- Crear la base de datos
+CREATE DATABASE gestion_documental;
+USE gestion_documental;
+
+-- Tabla para gestionar los usuarios
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    contraseña VARCHAR(255) NOT NULL,
+    rol ENUM('Lector', 'Escritor', 'Administrador') NOT NULL
+);
+
+-- Tabla para gestionar proyectos
+CREATE TABLE proyectos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    fecha_creacion DATE NOT NULL,
+    fecha_inicio DATE,
+    fecha_fin DATE,
+    codigo_proyecto VARCHAR(50) NOT NULL UNIQUE,
+    palabras_clave VARCHAR(255),
+    tipo_proyecto VARCHAR(100),
+    activo BOOLEAN DEFAULT TRUE,
+    calificacion INT,
+    auditora VARCHAR(100),
+    codigo VARCHAR(100),
+    en_cooperacion BOOLEAN DEFAULT FALSE,
+    bajada_calificacion INT,
+    fases VARCHAR(255)
+);
+
+-- Tabla para gestionar documentos asociados a los proyectos
+CREATE TABLE documentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    proyecto_id INT,
+    nombre_documento VARCHAR(255) NOT NULL,
+    fecha_creacion DATE NOT NULL,
+    documento LONGBLOB,
+    FOREIGN KEY (proyecto_id) REFERENCES proyectos(id) ON DELETE CASCADE
+);
+
+-- Tabla para gestión de auditoría de acciones de los usuarios
+CREATE TABLE auditoria (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    accion VARCHAR(255) NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+-- Tabla para registrar las estadísticas de acceso a documentos
+CREATE TABLE estadisticas_acceso (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    documento_id INT,
+    fecha_acceso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    usuario_id INT,
+    FOREIGN KEY (documento_id) REFERENCES documentos(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
